@@ -1,11 +1,11 @@
 $(document).ready(function() {
     // ***** Part 1: Creates the top right card and adds the city name and weather data
-    var wrapper0 = $("#upper-right");
+    var wrapper0 = $("#right-side");
     // Designs the top right of the page (city name, date, and weather attributes)
     var wrapper1 = $("<div>"); // Creates the container for the card
     wrapper1.addClass("container");
-    var wrapper1Row = $("<div>"); // Creates padding for the card on the left
-    wrapper1Row.addClass("row"); 
+    var wrapper1Row1 = $("<div>"); // Creates padding for the card on the left
+    wrapper1Row1.addClass("row"); 
     var wrapper1Card = $("<div>"); // Creates the card itself
     wrapper1Card.addClass("col-lg-8");
     wrapper1Card.addClass("card");
@@ -27,7 +27,7 @@ $(document).ready(function() {
     }
 
     wrapper0.append(wrapper1);
-    wrapper1.append(wrapper1Row);
+    wrapper1.append(wrapper1Row1);
     wrapper1.append(wrapper1Card);
     wrapper1Card.append(wrapper1CardBody);
     
@@ -41,36 +41,34 @@ $(document).ready(function() {
     // wrapper1CityWind.addClass("card-text");
 
     // ***** Part 2: Creates the bottom-right array for the 5-day forecast
-    var wrapper2 = $("#lower-right");
-    // Designs the bottom right of the page (5-day forecast)
-    var wrapper3 = $("<div>"); // Creates the container for the card
-    wrapper3.addClass("container");
-    var wrapper3Row = $("<div>"); // Creates padding for the card on the left
-    wrapper3Row.addClass("row"); 
+   
+    var wrapper1Row2 = $("<div>"); // Creates the container for the card
+    wrapper1Row2.addClass("row");
+    // var wrapper2Row = $("<div>"); // Creates padding for the card on the left
+    // wrapper2Row.addClass("row"); 
 
     for (var j = 0; j < 5; j++){
-    var wrapper3Card = $("<div>"); // Creates the card itself
-    wrapper3Card.addClass("card mx-2 my-2");
-    wrapper3Card.attr("id", "day-" + (j+1));
-    var wrapper3Date = $("<h4>"); // Creates the card title - city name
-    wrapper3Date.addClass("card-title");
+    var row2Card = $("<div>"); // Creates the card itself
+    row2Card.addClass("card mx-2 my-2");
+    row2Card.attr("id", "day-" + (j+1));
+    var row2Date = $("<h4>"); // Creates the card title - city name
+    row2Date.addClass("card-title");
     var futureDate = new moment().add(j+1, 'day'); // Adds the future days to each card
-    wrapper3Date.append(futureDate.format("MM/DD/YYYY"));
-    wrapper3Card.append(wrapper3Date);
+    row2Date.append(futureDate.format("MM/DD/YYYY"));
+    row2Card.append(row2Date);
     var cityFutureTemp = $("<p>"); // Adds in the temperature and humidity lines
     cityFutureTemp.addClass("card-text");
-    wrapper3Card.append(cityFutureTemp);
+    row2Card.append(cityFutureTemp);
     cityFutureTemp.append("Temp: ");
     var cityFutureHumid = $("<p>"); // Adds in the temperature and humidity lines
     cityFutureHumid.addClass("card-text");
-    wrapper3Card.append(cityFutureHumid);
+    row2Card.append(cityFutureHumid);
     cityFutureHumid.append("Humidity: ");
 
-    wrapper3Row.append(wrapper3Card);
+    wrapper1Row2.append(row2Card);
     }
 
-    wrapper2.append(wrapper3);
-    wrapper3.append(wrapper3Row);
+   wrapper1.append(wrapper1Row2);
    
     
 
