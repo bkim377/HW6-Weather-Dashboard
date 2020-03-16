@@ -1,6 +1,6 @@
 $(document).ready(function() {
     // ********** Part 1: Creates the top right card and adds the city name and weather data
-    var mainBody = $("#right-side");
+    var rightSide = $("#right-side");
     // Designs the top right of the page (city name, date, and weather attributes)
     var wrapper1 = $("<div>"); // Creates the container for the card
     wrapper1.addClass("container");
@@ -24,7 +24,7 @@ $(document).ready(function() {
         wrapper1Card.append(cityWeatherData);
         cityWeatherData.append(cityWeather[i]);
     }
-    mainBody.append(wrapper1);
+    rightSide.append(wrapper1);
     wrapper1.append(wrapper1Row1);
     wrapper1.append(wrapper1Card);
     
@@ -66,19 +66,73 @@ $(document).ready(function() {
    wrapper1.append(wrapper1Row2);
    
     
-   // ********** Part 3: Creates the search bar and search history section on the left side of the screen
+   // ********** Part 3: Adds the search history beneath the search bar
+    cityInput = $("#city-search-bar");
+    cityForm = $("#city-form");
+    cityList = $("#city-list");
+  
 
-    var leftSide = $("#left-side");
-    var wrapper2 = $("<div>"); // Creates the container for the card
-    wrapper2.addClass("container");
-    var wrapper2Row1 = $("<div>"); // Creates padding for the card on the left
-    wrapper2Row1.addClass("row"); 
-    wrapper2Search = $("<input>");
-    wrapper2Search.addClass("form-control");
-    wrapper2Search.setAttribute("type", "text");
+    var cities = [];
+    
+    init();
 
-    leftSide.append(wrapper2);
-    wrapper2.append(wrapper2Row1);
-    wrapper2Row1.append(wrapper2Search);
+    function renderCities() {
+        // Clear city element
+        cityList.html("");
+      
+        // Render a new li for each city
+        for (var i = 0; i < cities.length; i++) {
+          var city = cities[i];
+      
+          var li = $("<li>");
+          li.text(city);
+          li.attr("data-index", i);
+      
+          var button = $("<button>");
+          button.text("Search");
+      
+          li.append(button);
+          cityList.append(li);
+        }
+      }
+
+      function init() {
+        // Get stored cities from localStorage
+        // Parsing the JSON string to an object
+        var storedCities = JSON.parse(localStorage.getItem("left-side"));
+      
+        // If cities were retrieved from localStorage, update the cities array to it
+        if (storedCities !== null) {
+          cities = storedCities;
+        }
+      
+        // Render cities to the DOM
+        renderCities();
+      }
+      
+      function storeCities() {
+        // Stringify and set "cities" key in localStorage to cities array
+        localStorage.setItem("cities", JSON.stringify(cities));
+      }
+
+    // When form is submitted...
+    cityForm.on("click", function(event) {
+        event.preventDefault();
+    
+        var cityText = cityInput.val();
+    
+        // Return from function early if submitted cityText is blank
+        if (cityText === "") {
+        return;
+        }
+    
+        // Add new cityText to cities array, clear the input
+        cities.push(cityText);
+        cityInput.val("");
+    
+        // Store updated cities in localStorage, re-render the list
+        storeCities();
+        renderCities();
+    });
 
 })
