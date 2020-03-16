@@ -26,7 +26,7 @@ $(document).ready(function() {
     }
     rightSide.append(wrapper1);
     wrapper1.append(wrapper1Row1);
-    wrapper1.append(wrapper1Card);
+    wrapper1Row1.append(wrapper1Card);
     
     // wrapper1CardBody.append(cityWeatherData);
 

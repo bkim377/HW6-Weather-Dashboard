@@ -3,6 +3,7 @@
 }
 
 #right-side .container {
+  width: 900px;
   padding: 10px;
   float: right;
   justify-content: right;
@@ -10,6 +11,7 @@
 
 .col-lg-8 {
   padding: 20px;  
+  margin-bottom: 20px;
 }
 
 #day-1 {
@@ -44,7 +46,7 @@ li {
   margin-top: 5px;
   margin-bottom: 5px;
   padding: 5px;
-  background-color: #ff5d88;
+  background-color: darkgray;
   color: white;
   font-size: 1.5em;
   line-height: 1.5;
@@ -66,7 +68,7 @@ li button {
   border: none;
   height: 40px;
   cursor: pointer;
-  background-color: #ff9500;
+  background-color: green;
   color: white;
   font-size: 1em;
 }
