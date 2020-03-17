@@ -54,10 +54,12 @@ $(document).ready(function() {
     row2Card.append(row2Date);
     var cityFutureTemp = $("<p>"); // Adds in the temperature and humidity lines
     cityFutureTemp.addClass("card-text");
+    cityFutureTemp.attr("id", "temp-" + (j + 1));
     row2Card.append(cityFutureTemp);
     cityFutureTemp.append("Temp: ");
     var cityFutureHumid = $("<p>"); // Adds in the temperature and humidity lines
     cityFutureHumid.addClass("card-text");
+    cityFutureHumid.attr("id", "humid-" + (j + 1));
     row2Card.append(cityFutureHumid);
     cityFutureHumid.append("Humidity: ");
 
@@ -100,8 +102,7 @@ $(document).ready(function() {
   }
 
   function init() {
-    // Get stored cities from localStorage
-    // Parsing the JSON string to an object
+    // Get stored cities from localStorage and parse the JSON string to an object
     var storedCities = JSON.parse(localStorage.getItem("left-side"));
     // If cities were retrieved from localStorage, update the cities array to it
     if (storedCities !== null) {
@@ -146,7 +147,7 @@ $(document).ready(function() {
       // We store all of the retrieved data inside of an object called "response"
       .then(function(response) {
         // Transfer content to HTML (top-right card)
-        $("#city-name").html(response.name);
+        $("#city-name").html(response.name + " (" + moment().format("MM/DD/YYYY, h:mm:ss a") + ")");
         $("#city-humid").text("Humidity: " + response.main.humidity);
         $("#city-wind").text("Wind Speed: " + response.wind.speed);
         // Convert the temp to fahrenheit
@@ -175,12 +176,16 @@ $(document).ready(function() {
         });
       });
   
-      var queryURLforecast = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityText + "&appid=" + APIkey;
+      var queryURLforecast = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityText + "&cnt=5&appid=" + APIkey;
     $.ajax({
       url: queryURLforecast,
       method: "GET"
     }).then(function(response) {
-      // $("#city-UV").text("UV Index: " + response.value);
+      for (var i = 0; i < 5; i++) {
+        var tempF = (response.list[i].main.temp - 273.15) * 1.8 + 32;
+        $("#temp-"+(i+1)).text("Temp: " + tempF.toFixed(2) + " °F");
+        $("#humid-"+(i+1)).text("Humidity: " + response.list[i].main.humidity);
+      }
     });
     
 
