@@ -133,6 +133,8 @@ $(document).ready(function() {
 
     // This part calls the OpenWeather API and retrieves the weather data for the searched city
     // Code taken from Unit 6, Exercise 5, solved folder, bujumbra-solved.html
+    
+    // ++++++++++ AJAX request 1: top-right card
     var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityText + "&appid=" + APIkey;
     $.ajax({
       url: queryURL,
@@ -140,27 +142,32 @@ $(document).ready(function() {
     })
   // We store all of the retrieved data inside of an object called "response"
   .then(function(response) {
-  
-      // Transfer content to HTML
+      // Transfer content to HTML (top-right card)
       $("#city-name").html(response.name);
-      $("#city-temp").text()
       $("#city-humid").text("Humidity: " + response.main.humidity);
       $("#city-wind").text("Wind Speed: " + response.wind.speed);
-      
       // Convert the temp to fahrenheit
       var tempF = (response.main.temp - 273.15) * 1.80 + 32;
-  
       // add temp content to html
       $("#city-temp").text("Temperature (F): " + tempF.toFixed(2));
-  
-      // // Log the data in the console as well
-      // console.log("Wind Speed: " + response.wind.speed);
-      // console.log("Humidity: " + response.main.humidity);
-      // console.log("Temperature (F): " + tempF);
+      
+      // ++++++++++ AJAX request 2: top-right card (UV Index)
+      $.ajax({
+        url: "http://api.openweathermap.org/data/2.5/uvi?appid=" + APIkey + "&lat=" + response.coord.lat + "&lon=" + response.coord.lon,
+        method: "GET"
+      })
+      .then(function(response) {
+        $("#city-UV").text("UV Index: " + response.value) 
+      });
+      
     });
-  
+     
+    
+   
+    
     
   });
+
 
   // When an element inside of the cityList is clicked...
   cityList.on("click", function(event) {
