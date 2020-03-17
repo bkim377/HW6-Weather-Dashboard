@@ -12,16 +12,19 @@ $(document).ready(function() {
   var wrapper1Card = $("<div>"); // Creates the card itself
   wrapper1Card.addClass("col-lg-8");
   wrapper1Card.addClass("card");
-  // var wrapper1CardBody = $("<div>"); // Creates the card body
-  // wrapper1CardBody.addClass("card-body");
   var wrapper1CityName = $("<h3>"); // Creates the card title - city name
   wrapper1CityName.addClass("card-title");
   wrapper1CityName.attr("id", "city-name");
+  var wrapper1CityIcon = $("<img>");
+  wrapper1CityIcon.attr("id", "current-weather");
 
-  // wrapper1CityName.append("Testing "); // ***** Replace with retrieved city name
+
+  // appends all necessary card elements to the top right card
   wrapper1CityName.append("(" + moment().format("MM/DD/YYYY, h:mm:ss a") + ")");
   wrapper1Card.append(wrapper1CityName);
+  wrapper1Card.append(wrapper1CityIcon);
 
+  // Array that creates the 5 bottom right cards
   cityWeather = ["Temperature: ", "Humidity: ", "Wind Speed: ", "UV Index: "];
   cityWeatherIDs = ["city-temp", "city-humid", "city-wind", "city-UV"];
   for (var i = 0; i < cityWeather.length; i++) {
@@ -41,8 +44,7 @@ $(document).ready(function() {
 
   var wrapper1Row2 = $("<div>"); // Creates the container for the card
   wrapper1Row2.addClass("row");
-  // var wrapper2Row = $("<div>"); // Creates padding for the card on the left
-  // wrapper2Row.addClass("row");
+
   for (var j = 0; j < 5; j++) {
     var row2Card = $("<div>"); // Creates the card itself
     row2Card.addClass("card mx-2 my-2");
@@ -147,9 +149,11 @@ $(document).ready(function() {
       // We store all of the retrieved data inside of an object called "response"
       .then(function(response) {
         // Transfer content to HTML (top-right card)
-        $("#city-name").html(response.name + " (" + moment().format("MM/DD/YYYY, h:mm:ss a") + ")");
-        $("#city-humid").text("Humidity: " + response.main.humidity);
-        $("#city-wind").text("Wind Speed: " + response.wind.speed);
+        $("#city-name").html(response.name + " (" + moment().format("MM/DD/YYYY") + ")");
+        var iconURL = ("https://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png");
+        wrapper1CityIcon.attr("src", iconURL);
+        $("#city-humid").text("Humidity: " + response.main.humidity + "%");
+        $("#city-wind").text("Wind Speed: " + response.wind.speed + " mph");
         // Convert the temp to fahrenheit
         var tempF = (response.main.temp - 273.15) * 1.8 + 32;
         // add temp content to html
@@ -184,7 +188,7 @@ $(document).ready(function() {
       for (var i = 0; i < 5; i++) {
         var tempF = (response.list[i].main.temp - 273.15) * 1.8 + 32;
         $("#temp-"+(i+1)).text("Temp: " + tempF.toFixed(2) + " °F");
-        $("#humid-"+(i+1)).text("Humidity: " + response.list[i].main.humidity);
+        $("#humid-"+(i+1)).text("Humidity: " + response.list[i].main.humidity + "%");
       }
     });
     
