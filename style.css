@@ -1,3 +1,7 @@
+.jumbotron {
+  text-align: center;
+}
+
 #left-side {
     float: left;
 }
