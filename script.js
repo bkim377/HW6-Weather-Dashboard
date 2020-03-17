@@ -16,7 +16,7 @@ $(document).ready(function() {
   wrapper1CityName.addClass("card-title");
   wrapper1CityName.attr("id", "city-name");
   var wrapper1CityIcon = $("<img>");
-  wrapper1CityIcon.attr("id", "current-weather");
+  wrapper1CityIcon.attr("id", "current-icon");
 
 
   // appends all necessary card elements to the top right card
@@ -24,12 +24,12 @@ $(document).ready(function() {
   wrapper1Card.append(wrapper1CityName);
   wrapper1Card.append(wrapper1CityIcon);
 
-  // Array that creates the 5 bottom right cards
   cityWeather = ["Temperature: ", "Humidity: ", "Wind Speed: ", "UV Index: "];
   cityWeatherIDs = ["city-temp", "city-humid", "city-wind", "city-UV"];
   for (var i = 0; i < cityWeather.length; i++) {
     var cityWeatherData = $("<p>");
     cityWeatherData.addClass("card-text");
+
     wrapper1Card.append(cityWeatherData);
     cityWeatherData.append(cityWeather[i]);
     cityWeatherData.attr("id", cityWeatherIDs[i]);
@@ -48,18 +48,23 @@ $(document).ready(function() {
   for (var j = 0; j < 5; j++) {
     var row2Card = $("<div>"); // Creates the card itself
     row2Card.addClass("card mx-2 my-2");
-    row2Card.attr("id", "day-" + (j + 1));
+    row2Card.attr("id", "day-" + (j+1));
     var row2Date = $("<h4>"); // Creates the card title - city name
     row2Date.addClass("card-title");
     var futureDate = new moment().add(j + 1, "day"); // Adds the future days to each card
     row2Date.append(futureDate.format("MM/DD/YYYY"));
     row2Card.append(row2Date);
-    var cityFutureTemp = $("<p>"); // Adds in the temperature and humidity lines
+
+    var cityWeatherIcons = $("<img>"); // appends the img div to all cards
+    cityWeatherIcons.attr("id", "future-icons-" + (j+1));
+    row2Card.append(cityWeatherIcons);
+
+    var cityFutureTemp = $("<p>"); // Adds in the temperature lines
     cityFutureTemp.addClass("card-text");
     cityFutureTemp.attr("id", "temp-" + (j + 1));
     row2Card.append(cityFutureTemp);
     cityFutureTemp.append("Temp: ");
-    var cityFutureHumid = $("<p>"); // Adds in the temperature and humidity lines
+    var cityFutureHumid = $("<p>"); // Adds in the humidity lines
     cityFutureHumid.addClass("card-text");
     cityFutureHumid.attr("id", "humid-" + (j + 1));
     row2Card.append(cityFutureHumid);
@@ -141,7 +146,7 @@ $(document).ready(function() {
     // Code taken from Unit 6, Exercise 5, solved folder, bujumbra-solved.html
 
     var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityText + "&appid=" + APIkey;
-    // ++++++++++ AJAX request 1: top-right card    
+    // ++++++++++ AJAX request 1: top-right card (Temperature, Humidity, Wind Speed)   
     $.ajax({
       url: queryURL,
       method: "GET"
@@ -164,6 +169,7 @@ $(document).ready(function() {
           url: "http://api.openweathermap.org/data/2.5/uvi?appid=" + APIkey + "&lat=" + response.coord.lat + "&lon=" + response.coord.lon,
           method: "GET"
         }).then(function(response) {
+          // Adds color to UV Index line based on magnitude 
           $("#city-UV").text("UV Index: " + response.value);
           if (response.value < 3) {
             $("#city-UV").addClass("favorable").removeClass("moderate high very-high severe");
@@ -176,7 +182,6 @@ $(document).ready(function() {
           } else if (response.value > 11) {
             $("#city-UV").addClass("severe").removeClass("favorable moderate high very-high");
           }
-
         });
       });
   
@@ -186,9 +191,15 @@ $(document).ready(function() {
       method: "GET"
     }).then(function(response) {
       for (var i = 0; i < 5; i++) {
+        // adds future weather icons to the weekly forecast
+        var iconURL = ("https://openweathermap.org/img/wn/" + response.list[i].weather[0].icon + ".png");
+        $("#future-icons-"+(i+1)).attr("src", iconURL);
+        // adds temperature and humidity lines to weekly forecast
         var tempF = (response.list[i].main.temp - 273.15) * 1.8 + 32;
         $("#temp-"+(i+1)).text("Temp: " + tempF.toFixed(2) + " °F");
         $("#humid-"+(i+1)).text("Humidity: " + response.list[i].main.humidity + "%");
+
+    
       }
     });
     
