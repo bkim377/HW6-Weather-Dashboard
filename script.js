@@ -1,8 +1,8 @@
 $(document).ready(function() {
   // ********** This .js file sets up the page's HTML elements and the search bar's history.
-  
+
   // ********** Part 1: Creates the top right card and adds the city name and weather data
-  
+
   var rightSide = $("#right-side");
   // Designs the top right of the page (city name, date, and weather attributes)
   var wrapper1 = $("<div>"); // Creates the container for the card
@@ -66,7 +66,7 @@ $(document).ready(function() {
   wrapper1.append(wrapper1Row2);
 
   // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  
+
   // ********** Part 3: Adds the search history beneath the search bar
   // Code taken from Unit 4 (Web APIs), Exercise 28, solved folder, script.js
 
@@ -116,6 +116,9 @@ $(document).ready(function() {
     localStorage.setItem("cities", JSON.stringify(cities));
   }
 
+  // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  
+  // ********** Part 4: Requests data from OpenWeatherAPI when the search button is clicked
   // When form is submitted...
   cityForm.on("click", function(event) {
     event.preventDefault();
@@ -133,41 +136,55 @@ $(document).ready(function() {
 
     // This part calls the OpenWeather API and retrieves the weather data for the searched city
     // Code taken from Unit 6, Exercise 5, solved folder, bujumbra-solved.html
-    
-    // ++++++++++ AJAX request 1: top-right card
+
     var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityText + "&appid=" + APIkey;
+    // ++++++++++ AJAX request 1: top-right card    
     $.ajax({
       url: queryURL,
       method: "GET"
     })
-  // We store all of the retrieved data inside of an object called "response"
-  .then(function(response) {
-      // Transfer content to HTML (top-right card)
-      $("#city-name").html(response.name);
-      $("#city-humid").text("Humidity: " + response.main.humidity);
-      $("#city-wind").text("Wind Speed: " + response.wind.speed);
-      // Convert the temp to fahrenheit
-      var tempF = (response.main.temp - 273.15) * 1.80 + 32;
-      // add temp content to html
-      $("#city-temp").text("Temperature (F): " + tempF.toFixed(2));
-      
-      // ++++++++++ AJAX request 2: top-right card (UV Index)
-      $.ajax({
-        url: "http://api.openweathermap.org/data/2.5/uvi?appid=" + APIkey + "&lat=" + response.coord.lat + "&lon=" + response.coord.lon,
-        method: "GET"
-      })
+      // We store all of the retrieved data inside of an object called "response"
       .then(function(response) {
-        $("#city-UV").text("UV Index: " + response.value) 
-      });
-      
-    });
-     
-    
-   
-    
-    
-  });
+        // Transfer content to HTML (top-right card)
+        $("#city-name").html(response.name);
+        $("#city-humid").text("Humidity: " + response.main.humidity);
+        $("#city-wind").text("Wind Speed: " + response.wind.speed);
+        // Convert the temp to fahrenheit
+        var tempF = (response.main.temp - 273.15) * 1.8 + 32;
+        // add temp content to html
+        $("#city-temp").text("Temperature: " + tempF.toFixed(2) + " °F");
 
+        // ++++++++++ AJAX request 2: top-right card (UV Index)
+        $.ajax({
+          url: "http://api.openweathermap.org/data/2.5/uvi?appid=" + APIkey + "&lat=" + response.coord.lat + "&lon=" + response.coord.lon,
+          method: "GET"
+        }).then(function(response) {
+          $("#city-UV").text("UV Index: " + response.value);
+          if (response.value < 3) {
+            $("#city-UV").addClass("favorable").removeClass("moderate high very-high severe");
+          } else if (response.value >= 3 && response.value < 6) {
+            $("#city-UV").addClass("moderate").removeClass("favorable high very-high severe");
+          } else if (response.value >= 6 && response.value < 8) {
+            $("#city-UV").addClass("high").removeClass("favorable moderate very-high severe");
+          } else if (response.value >= 8 && response.value < 11) {
+            $("#city-UV").addClass("very-high").removeClass("favorable moderate high severe");
+          } else if (response.value > 11) {
+            $("#city-UV").addClass("severe").removeClass("favorable moderate high very-high");
+          }
+
+        });
+      });
+  
+      var queryURLforecast = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityText + "&appid=" + APIkey;
+    $.ajax({
+      url: queryURLforecast,
+      method: "GET"
+    }).then(function(response) {
+      // $("#city-UV").text("UV Index: " + response.value);
+    });
+    
+
+    });
 
   // When an element inside of the cityList is clicked...
   cityList.on("click", function(event) {
@@ -176,9 +193,8 @@ $(document).ready(function() {
     // If that element is a button...
     if (element.matches("button") === true) {
       // *****Still need to do***** Get its data-index value and search that city again
-        // var index = element.parentElement.getAttribute("data-index");
-        // todos.splice(index, 1);
-
+      // var index = element.parentElement.getAttribute("data-index");
+      // todos.splice(index, 1);
     }
   });
 });

@@ -44,7 +44,6 @@
   padding: 10px;
 }
 
-
 li {
   height: 50px;
   margin-top: 5px;
@@ -85,4 +84,24 @@ li button:hover {
   width: 800px;
   margin: 0 auto;
   margin-top: 40px;
+}
+
+.favorable {
+  background-color: lightgreen;
+}
+
+.moderate {
+  background-color: yellow;
+}
+
+.high {
+  background-color: orange;
+}
+
+.very-high{
+  background-color: red;
+}
+
+.severe {
+  background-color: purple;
 }
