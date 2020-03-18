@@ -2,6 +2,10 @@
   text-align: center;
 }
 
+#forecast-header {
+  height: 30px;
+}
+
 #left-side {
     float: left;
 }
