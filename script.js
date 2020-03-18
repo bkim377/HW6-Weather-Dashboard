@@ -43,36 +43,44 @@ $(document).ready(function() {
 
   var wrapper1Row2 = $("<div>"); // Creates the container for the card
   wrapper1Row2.addClass("row");
+  wrapper1Row2Header = $("<h3>");
+  wrapper1Row2Header.attr("id", "forecast-header");
+  wrapper1Row2Header.append("5-Day Forecast:");
+  wrapper1Row2.append(wrapper1Row2Header);
+
+  wrapper1Row3 = $("<div>");
+  wrapper1Row3.addClass("row");
 
   // for loop that creates the blue cards for the weekly forecast
   for (var j = 0; j < 5; j++) {
-    var row2Card = $("<div>"); // Creates the card itself
-    row2Card.addClass("card mx-2 my-2");
-    row2Card.attr("id", "day-" + (j+1));
-    var row2Date = $("<h4>"); // Creates the card title - city name
-    row2Date.addClass("card-title");
+    var row3Card = $("<div>"); // Creates the card itself
+    row3Card.addClass("card mx-2 my-2");
+    row3Card.attr("id", "day-" + (j+1));
+    var row3Date = $("<h4>"); // Creates the card title - city name
+    row3Date.addClass("card-title");
     var futureDate = new moment().add(j + 1, "day"); // Adds the future days to each card
-    row2Date.append(futureDate.format("MM/DD/YYYY"));
-    row2Card.append(row2Date);
+    row3Date.append(futureDate.format("MM/DD/YYYY"));
+    row3Card.append(row3Date);
 
     var cityWeatherIcons = $("<img>"); // appends the img div to all cards
     cityWeatherIcons.attr("id", "future-icons-" + (j+1));
-    row2Card.append(cityWeatherIcons);
+    row3Card.append(cityWeatherIcons);
 
     var cityFutureTemp = $("<p>"); // Adds in the temperature lines
     cityFutureTemp.addClass("card-text");
     cityFutureTemp.attr("id", "temp-" + (j + 1));
-    row2Card.append(cityFutureTemp);
+    row3Card.append(cityFutureTemp);
     cityFutureTemp.append("Temp: ");
     var cityFutureHumid = $("<p>"); // Adds in the humidity lines
     cityFutureHumid.addClass("card-text");
     cityFutureHumid.attr("id", "humid-" + (j + 1));
-    row2Card.append(cityFutureHumid);
+    row3Card.append(cityFutureHumid);
     cityFutureHumid.append("Humidity: ");
 
-    wrapper1Row2.append(row2Card);
+    wrapper1Row3.append(row3Card);
   }
   wrapper1.append(wrapper1Row2);
+  wrapper1.append(wrapper1Row3);
 
   // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -172,7 +180,7 @@ $(document).ready(function() {
 
         // ++++++++++ AJAX request 2: top-right card (UV Index)
         $.ajax({
-          url: "http://api.openweathermap.org/data/2.5/uvi?appid=" + APIkey + "&lat=" + response.coord.lat + "&lon=" + response.coord.lon,
+          url: "https://api.openweathermap.org/data/2.5/uvi?appid=" + APIkey + "&lat=" + response.coord.lat + "&lon=" + response.coord.lon,
           method: "GET"
         }).then(function(response) {
           // Adds color to UV Index line based on magnitude - lightgreen, yellow, orange, red, purple
@@ -244,7 +252,7 @@ $(document).ready(function() {
 
         // ++++++++++ AJAX request 2: top-right card (UV Index)
         $.ajax({
-          url: "http://api.openweathermap.org/data/2.5/uvi?appid=" + APIkey + "&lat=" + response.coord.lat + "&lon=" + response.coord.lon,
+          url: "https://api.openweathermap.org/data/2.5/uvi?appid=" + APIkey + "&lat=" + response.coord.lat + "&lon=" + response.coord.lon,
           method: "GET"
         }).then(function(response) {
           // Adds color to UV Index line based on magnitude - lightgreen, yellow, orange, red, purple
@@ -320,7 +328,7 @@ $(".past-search").on("click", function(event) {
 
       // ++++++++++ AJAX request 2: top-right card (UV Index)
       $.ajax({
-        url: "http://api.openweathermap.org/data/2.5/uvi?appid=" + APIkey + "&lat=" + response.coord.lat + "&lon=" + response.coord.lon,
+        url: "https://api.openweathermap.org/data/2.5/uvi?appid=" + APIkey + "&lat=" + response.coord.lat + "&lon=" + response.coord.lon,
         method: "GET"
       }).then(function(response) {
         // Adds color to UV Index line based on magnitude - lightgreen, yellow, orange, red, purple
@@ -386,7 +394,7 @@ $(document).ready(function() {
 
       // ++++++++++ AJAX request 2: top-right card (UV Index)
       $.ajax({
-        url: "http://api.openweathermap.org/data/2.5/uvi?appid=" + APIkey + "&lat=" + response.coord.lat + "&lon=" + response.coord.lon,
+        url: "https://api.openweathermap.org/data/2.5/uvi?appid=" + APIkey + "&lat=" + response.coord.lat + "&lon=" + response.coord.lon,
         method: "GET"
       }).then(function(response) {
         // Adds color to UV Index line based on magnitude - lightgreen, yellow, orange, red, purple
