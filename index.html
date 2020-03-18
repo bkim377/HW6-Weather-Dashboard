@@ -22,7 +22,7 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <link rel="stylesheet" href="style.css" />
-    <title>Work Day Scheduler</title>
+    <title>Weather Dashboard</title>
   </head>
 
   <body>
@@ -30,7 +30,18 @@
       <h1 class="display-3">Weather Dashboard</h1>
     </header>
 
-    <div id="main-body"></div>   
+    <div id="left-side">
+    <form class="form-inline" id="city-form">
+        <div class="form-group mx-sm-3 mb-2">
+          <label for="citySearchBar" class="mr-2">Search for a City:  </label>
+          <input type="text" class="form-control" id="city-search-bar" placeholder="Enter city name">
+          <button type="submit"><i class="fa fa-search"></i></button>
+        </div> 
+    </form>
+        <ul id="city-list"></ul>
+    </div> 
+    
+    <div id="right-side"></div>  
 
     <script src="script.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

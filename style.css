@@ -1,0 +1,128 @@
+.jumbotron {
+  text-align: center;
+}
+
+#left-side {
+    float: left;
+}
+
+#right-side .container {
+  width: 900px;
+  padding: 10px;
+  float: right;
+  justify-content: right;
+}
+
+.col-lg-8 {
+  padding: 20px;  
+  margin-bottom: 20px;
+}
+
+
+#day-1 {
+  background-color: blue;
+  color: white;
+  padding: 10px;
+}
+#day-2 {
+  background-color: blue;
+  color: white;
+  padding: 10px;
+}
+#day-3 {
+  background-color: blue;
+  color: white;
+  padding: 10px;
+}
+#day-4 {
+  background-color: blue;
+  color: white;
+  padding: 10px;
+}
+#day-5 {
+  background-color: blue;
+  color: white;
+  padding: 10px;
+}
+
+li {
+  height: 50px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding: 5px;
+  background-color: darkgray;
+  color: white;
+  font-size: 1.5em;
+  line-height: 1.5;
+}
+
+li:before {
+  content: "\200B";
+  position: absolute;
+}
+
+li::after {
+  content: " ";
+  display: block;
+  clear: both;
+}
+
+li button {
+  float: right;
+  border: none;
+  height: 40px;
+  cursor: pointer;
+  background-color: green;
+  color: white;
+  font-size: 1em;
+}
+
+li button:hover {
+  background-color: #febc5d;
+}
+
+.cities {
+  width: 800px;
+  margin: 0 auto;
+  margin-top: 40px;
+}
+
+.favorable {
+  background-color: lightgreen;
+}
+
+.moderate {
+  background-color: yellow;
+}
+
+.high {
+  background-color: orange;
+}
+
+.very-high{
+  background-color: red;
+}
+
+.severe {
+  background-color: purple;
+}
+
+#current-icon {
+  width: 100px;
+}
+
+#future-icons-1 {
+  width: 50px; 
+}
+#future-icons-2 {
+  width: 50px; 
+}
+#future-icons-3 {
+  width: 50px; 
+}
+#future-icons-4 {
+  width: 50px; 
+}
+#future-icons-5 {
+  width: 50px; 
+}
