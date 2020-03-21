@@ -5,6 +5,6 @@ A ReadME containing my HW6 - Weather Dashboard submission.  Contains a descripti
 
 2) Link to deployed application: https://bkim377.github.io/HW6-Weather-Dashboard/
 
-3) Screenshot: WeatherDashboardFinalized.png
+3) Screenshot: ![Weather Dashboard screenshot](WeatherDashboardFinalized.png)
 
 
