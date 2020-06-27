@@ -109,6 +109,7 @@ li button:hover {
 
 .severe {
   background-color: purple;
+  color: white;
 }
 
 #current-icon {
